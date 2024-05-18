@@ -22,5 +22,5 @@ protected:
 
 private:
 	UPROPERTY(config, Category = Node, EditAnywhere, meta = (ClampMin = "0.0"))
-	float AcceptableRadius;
+	float MoveAwayDistance = 50;
 };

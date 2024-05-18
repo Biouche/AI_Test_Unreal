@@ -25,6 +25,7 @@ void UBTService_IsTooClose::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* N
 	if (!ClosestFriend)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No closest friend"));
+		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 		return;
 	}
 

@@ -25,6 +25,7 @@ void UBTService_IsLonely::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 	if (!ClosestFriend)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No closest friend"));
+		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 		return;
 	}
 

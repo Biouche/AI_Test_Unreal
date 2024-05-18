@@ -32,8 +32,8 @@ EBTNodeResult::Type UBTTask_MoveAwayFromTarget::ExecuteTask(UBehaviorTreeCompone
 		FVector OppositeDirection = -ToTarget;
 		OppositeDirection.Normalize();
 
-		FVector TargetLocation = OwnerPawn->GetActorLocation() + OppositeDirection * 50;
-		UE_LOG(LogTemp, Warning, TEXT("Moving t [%f, %f, %f]"), TargetLocation.X, TargetLocation.Y, TargetLocation.Z);
+		FVector TargetLocation = OwnerPawn->GetActorLocation() + OppositeDirection * MoveAwayDistance;
+
 		AIController->MoveToLocation(TargetLocation);
 		return EBTNodeResult::Succeeded;
 	}

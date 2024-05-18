@@ -2,6 +2,8 @@
 
 
 #include "Enemy_Character.h"
+#include "KillEmAllGameMode.h"
+#include "Components\CapsuleComponent.h"
 
 // Sets default values
 AEnemy_Character::AEnemy_Character()
@@ -38,6 +40,18 @@ float AEnemy_Character::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 	DamageToApply = FMath::Min(Health, DamageToApply);
 	Health -= DamageToApply;
 	UE_LOG(LogTemp, Warning, TEXT("Enemy Health left %f"), Health);
+
+	if (IsDead())
+	{
+		AKillEmAllGameMode* GameMode = GetWorld()->GetAuthGameMode<AKillEmAllGameMode>();
+		if (GameMode)
+		{
+			GameMode->PawnKilled(this);
+		}
+
+		DetachFromControllerPendingDestroy();
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 
 	return DamageToApply;
 }
