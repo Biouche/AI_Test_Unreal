@@ -16,10 +16,20 @@ void AZombie_AIController::BeginPlay()
 	if (AIBehavior)
 	{
 		RunBehaviorTree(AIBehavior);
+	}
 
-		UBlackboardComponent* BlackboardComponent = GetBlackboardComponent();
+
+}
+
+void AZombie_AIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	UBlackboardComponent* BlackboardComponent = GetBlackboardComponent();
+
+	if (GetPawn() && BlackboardComponent && !BlackboardComponent->IsVectorValueSet(TEXT("StartLocation")))
+	{
 		BlackboardComponent->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
-
 	}
 }
 

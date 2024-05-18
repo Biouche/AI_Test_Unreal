@@ -56,7 +56,6 @@ float AEnemy_Character::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	DamageToApply = FMath::Min(Health, DamageToApply);
 	Health -= DamageToApply;
-	UE_LOG(LogTemp, Warning, TEXT("Enemy Health left %f"), Health);
 
 	if (IsDead())
 	{

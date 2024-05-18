@@ -28,7 +28,6 @@ void UBTS_UpdateClosestFriendLocation::TickNode(UBehaviorTreeComponent& OwnerCom
 
 	if (!ClosestFriend)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No closest friend"));
 		return;
 	}
 
