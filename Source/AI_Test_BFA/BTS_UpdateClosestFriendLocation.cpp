@@ -23,7 +23,9 @@ void UBTS_UpdateClosestFriendLocation::TickNode(UBehaviorTreeComponent& OwnerCom
 		return;
 	}
 
+	AIController->FindClosestFriend();
 	AActor* ClosestFriend = AIController->GetClosestFriend();
+
 	if (!ClosestFriend)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No closest friend"));

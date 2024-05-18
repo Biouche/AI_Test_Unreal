@@ -19,19 +19,21 @@ void AZombie_AIController::BeginPlay()
 
 		UBlackboardComponent* BlackboardComponent = GetBlackboardComponent();
 		BlackboardComponent->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
+
 	}
 }
 
-AActor* AZombie_AIController::GetClosestFriend()
+AActor* AZombie_AIController::GetClosestFriend() const
+{
+	return ClosestFriend;
+}
+
+void AZombie_AIController::FindClosestFriend()
 {
 	float MinDistance = 100000;
 	UBlackboardComponent* BlackboardComponent = GetBlackboardComponent();
 
-	BlackboardComponent->ClearValue(TEXT("ClosestFriend"));
-	BlackboardComponent->ClearValue(TEXT("ClosestFriendLocation"));
-
-	ClosestFriend = nullptr;
-
+	APawn* NewClosestFriend = nullptr;
 	for (AZombie_AIController* Friend : TActorRange<AZombie_AIController>(GetWorld()))
 	{
 		if (Friend->GetPawn()->GetName().Equals(GetPawn()->GetName()))
@@ -43,21 +45,22 @@ AActor* AZombie_AIController::GetClosestFriend()
 
 		float CurrentActorDistance = FVector::Distance(GetPawn()->GetActorLocation(), FriendActorLocation);
 
-
 		if (CurrentActorDistance < MinDistance)
 		{
 			MinDistance = CurrentActorDistance;
-			ClosestFriend = Friend->GetPawn();
+			NewClosestFriend = Friend->GetPawn();
 		}
 	}
+	ClosestFriend = NewClosestFriend;
+	if (ClosestFriend)
+	{
+		BlackboardComponent->SetValueAsObject(TEXT("ClosestFriend"), NewClosestFriend);
+	}
+	else
+	{
+		BlackboardComponent->ClearValue(TEXT("ClosestFriend"));
+	}
 
-	if (!ClosestFriend)
-		return nullptr;
-
-	BlackboardComponent->SetValueAsObject(TEXT("ClosestFriend"), ClosestFriend);
-	BlackboardComponent->SetValueAsVector(TEXT("ClosestFriendLocation"), ClosestFriend->GetActorLocation());
-
-	return ClosestFriend;
 }
 
 float AZombie_AIController::GetMinDistanceFromFriends() const

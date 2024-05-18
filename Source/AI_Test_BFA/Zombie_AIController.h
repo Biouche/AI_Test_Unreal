@@ -22,14 +22,15 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UBehaviorTree* AIBehavior;
 
-	AActor* GetClosestFriend();
+	AActor* GetClosestFriend() const;
+
+	void FindClosestFriend();
+
 	float GetMinDistanceFromFriends() const;
 	float GetMaxDistanceFromFriends() const;
 	float GetMaxPlayerRange() const;
 
 private:
-	UPROPERTY(VisibleAnywhere)
-	AActor* ClosestFriend;
 
 	UPROPERTY(VisibleAnywhere)
 	float DistanceToClosestFriend;
@@ -42,4 +43,6 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float MaxPlayerRange = 10000;
+
+	APawn* ClosestFriend;
 };
