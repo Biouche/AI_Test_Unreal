@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "Enemy_Character.h"
-
+#include "Zombie_AIController.h"
 #include "KillEmAllGameMode.generated.h"
 
 /**
@@ -18,6 +18,12 @@ class AI_TEST_BFA_API AKillEmAllGameMode : public AGameModeBase
 
 public:
 	void PawnKilled(APawn* PawnKilled);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<AZombie_AIController*> Enemies;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int InitialEnemiesCount;
 
 protected:
 	virtual void BeginPlay() override;

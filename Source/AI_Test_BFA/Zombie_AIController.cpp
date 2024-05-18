@@ -6,6 +6,7 @@
 #include "Kismet\GameplayStatics.h"
 #include "BehaviorTree\BlackboardComponent.h"
 #include "EngineUtils.h"
+#include "KillEmAllGameMode.h"
 
 void AZombie_AIController::BeginPlay()
 {
@@ -17,8 +18,6 @@ void AZombie_AIController::BeginPlay()
 	{
 		RunBehaviorTree(AIBehavior);
 	}
-
-
 }
 
 void AZombie_AIController::Tick(float DeltaTime)
@@ -30,6 +29,15 @@ void AZombie_AIController::Tick(float DeltaTime)
 	if (GetPawn() && BlackboardComponent && !BlackboardComponent->IsVectorValueSet(TEXT("StartLocation")))
 	{
 		BlackboardComponent->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
+	}
+
+	AKillEmAllGameMode* GameMode = GetWorld()->GetAuthGameMode<AKillEmAllGameMode>();
+	if (!GameMode)
+		return;
+
+	if (GameMode->Enemies.Num() <= GameMode->InitialEnemiesCount / 2)
+	{
+		BlackboardComponent->SetValueAsBool(TEXT("IsHalfEnemiesLeft"), true);
 	}
 }
 
@@ -43,8 +51,12 @@ void AZombie_AIController::FindClosestFriend()
 	float MinDistance = 100000;
 	UBlackboardComponent* BlackboardComponent = GetBlackboardComponent();
 
+	AKillEmAllGameMode* GameMode = GetWorld()->GetAuthGameMode<AKillEmAllGameMode>();
+	if (!GameMode)
+		return;
+
 	APawn* NewClosestFriend = nullptr;
-	for (AZombie_AIController* Friend : TActorRange<AZombie_AIController>(GetWorld()))
+	for (AZombie_AIController* Friend : GameMode->Enemies)
 	{
 		if (Friend->GetPawn()->GetName().Equals(GetPawn()->GetName()))
 		{

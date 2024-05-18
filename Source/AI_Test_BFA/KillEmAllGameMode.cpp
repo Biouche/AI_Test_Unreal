@@ -13,6 +13,15 @@ void AKillEmAllGameMode::PawnKilled(APawn* PawnKilled)
 	{
 		EndGame(false);
 	}
+	else
+	{
+		AZombie_AIController* EnemyCharacter = Cast<AZombie_AIController>(PawnKilled->GetController());
+		if (EnemyCharacter)
+		{
+			// Remove eney from array
+			Enemies.Remove(EnemyCharacter);
+		}
+	}
 }
 
 void AKillEmAllGameMode::BeginPlay()
@@ -22,7 +31,7 @@ void AKillEmAllGameMode::BeginPlay()
 
 void AKillEmAllGameMode::EndGame(bool playerWon)
 {
-	for (AController* Controller : TActorRange<AController>(GetWorld()))
+	for (AController* Controller : Enemies)
 	{
 		bool isWinner = Controller->IsPlayerController() == playerWon;
 		Controller->GameHasEnded(Controller->GetPawn(), isWinner);
