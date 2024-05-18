@@ -9,7 +9,7 @@
 
 UBTService_PlayerIsInRange::UBTService_PlayerIsInRange()
 {
-	NodeName = TEXT("Is Player In Range ?");
+	NodeName = TEXT("Update Player Is In Range");
 }
 
 void UBTService_PlayerIsInRange::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
