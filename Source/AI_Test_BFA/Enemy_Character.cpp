@@ -4,11 +4,14 @@
 #include "Enemy_Character.h"
 #include "KillEmAllGameMode.h"
 #include "Components\CapsuleComponent.h"
+#include "Kismet\GameplayStatics.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
 
 // Sets default values
 AEnemy_Character::AEnemy_Character()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -17,7 +20,7 @@ AEnemy_Character::AEnemy_Character()
 void AEnemy_Character::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	Health = MaxHealth;
 }
 
@@ -25,6 +28,22 @@ void AEnemy_Character::BeginPlay()
 void AEnemy_Character::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	if (!PlayerPawn)
+		return;
+
+	//UCharacterMovementComponent* Movement = GetCharacterMovement();
+	float DistanceToPlayer = FVector::Dist(PlayerPawn->GetActorLocation(), GetActorLocation());
+	UE_LOG(LogTemp, Warning, TEXT("Distance to player : %f"), DistanceToPlayer);
+
+	if (FVector::Dist(PlayerPawn->GetActorLocation(), GetActorLocation()) > 2000)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 150;
+	}
+	else {
+		GetCharacterMovement()->MaxWalkSpeed = 300;
+	}
 
 }
 
