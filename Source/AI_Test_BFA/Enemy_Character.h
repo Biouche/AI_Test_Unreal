@@ -36,6 +36,15 @@ private:
 	UPROPERTY(EditAnywhere)
 	float RotationRate = 1;
 
+	UPROPERTY(EditAnywhere)
+	float CautiousWalkSpeed = 150;
+
+	UPROPERTY(EditAnywhere)
+	float FastWalkSpeed = 300;
+
+	UPROPERTY(EditAnywhere)
+	float FastWalkSpeedDistance = 2000;
+
 	UPROPERTY(EditDefaultsOnly)
 	float MaxHealth = 100;
 

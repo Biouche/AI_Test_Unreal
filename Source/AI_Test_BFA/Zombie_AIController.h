@@ -25,6 +25,7 @@ public:
 	AActor* GetClosestFriend();
 	float GetMinDistanceFromFriends() const;
 	float GetMaxDistanceFromFriends() const;
+	float GetMaxPlayerRange() const;
 
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -38,4 +39,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float MaxDistanceFromFriends = 200;
+
+	UPROPERTY(EditAnywhere)
+	float MaxPlayerRange = 10000;
 };

@@ -69,3 +69,8 @@ float AZombie_AIController::GetMaxDistanceFromFriends() const
 {
 	return MaxDistanceFromFriends;
 }
+
+float AZombie_AIController::GetMaxPlayerRange() const
+{
+	return MaxPlayerRange;
+}
