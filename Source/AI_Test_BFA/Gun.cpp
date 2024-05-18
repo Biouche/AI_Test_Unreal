@@ -38,14 +38,18 @@ void AGun::Shoot()
 	FVector End = ViewportLocation + ViewportRotation.Vector() * MaxRange;
 
 	FHitResult HitResult;
-	bool hasHit = GetWorld()->LineTraceSingleByChannel(HitResult, ViewportLocation, End, ECC_GameTraceChannel1);
+	FCollisionQueryParams CollisionParams;
+	CollisionParams.AddIgnoredActor(this);
+	CollisionParams.AddIgnoredActor(GetOwner());
+
+	bool hasHit = GetWorld()->LineTraceSingleByChannel(HitResult, ViewportLocation, End, ECC_GameTraceChannel1, CollisionParams);
 
 	if (hasHit) // Shooting successful
 	{
 		FVector ShotDirection = -ViewportRotation.Vector();
 		// Spawn impact
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, HitResult.Location, ShotDirection.Rotation());
-				
+
 		AActor* HitActor = HitResult.GetActor();
 		if (HitActor)
 		{

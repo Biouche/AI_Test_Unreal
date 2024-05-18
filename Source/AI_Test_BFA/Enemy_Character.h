@@ -4,17 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Gun.h"
-#include "ShooterCharacter.generated.h"
+#include "Enemy_Character.generated.h"
 
 UCLASS()
-class AI_TEST_BFA_API AShooterCharacter : public ACharacter
+class AI_TEST_BFA_API AEnemy_Character : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	AShooterCharacter();
+	AEnemy_Character();
 
 protected:
 	// Called when the game starts or when spawned
@@ -32,14 +31,7 @@ public:
 	UFUNCTION(BlueprintPure)
 	bool IsDead() const;
 
-	void Shoot();
-
 private:
-	void MoveForward(float AxisValue);
-	void MoveRight(float AxisValue);
-	void LookUpRate(float AxisValue);
-	void TurnRate(float AxisValue);
-
 
 	UPROPERTY(EditAnywhere)
 	float RotationRate = 1;
@@ -49,10 +41,4 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	float Health;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AGun> GunClass;
-
-	UPROPERTY()
-	AGun* Gun;
 };
