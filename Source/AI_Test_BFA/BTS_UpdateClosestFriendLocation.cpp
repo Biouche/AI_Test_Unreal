@@ -24,12 +24,6 @@ void UBTS_UpdateClosestFriendLocation::TickNode(UBehaviorTreeComponent& OwnerCom
 	}
 
 	AIController->FindClosestFriend();
-	AActor* ClosestFriend = AIController->GetClosestFriend();
 
-	if (!ClosestFriend)
-	{
-		return;
-	}
-
-	OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), ClosestFriend->GetActorLocation());
+	AIController->FindFarthestFriend();
 }

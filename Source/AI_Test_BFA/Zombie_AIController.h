@@ -14,6 +14,9 @@ class AI_TEST_BFA_API AZombie_AIController : public AAIController
 {
 	GENERATED_BODY()
 
+public:
+	AZombie_AIController(const FObjectInitializer& ObjectInitializer);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -27,8 +30,10 @@ public:
 	class UBehaviorTree* AIBehavior;
 
 	AActor* GetClosestFriend() const;
+	AActor* GetFarthestFriend() const;
 
 	void FindClosestFriend();
+	void FindFarthestFriend();
 
 	float GetMinDistanceFromFriends() const;
 	float GetMaxDistanceFromFriends() const;
@@ -43,10 +48,14 @@ private:
 	float MinDistanceFromFriends = 75;
 
 	UPROPERTY(EditAnywhere)
+	float CapsuleRadiusOffset = 30;
+
+	UPROPERTY(EditAnywhere)
 	float MaxDistanceFromFriends = 200;
 
 	UPROPERTY(EditAnywhere)
 	float MaxPlayerRange = 10000;
 
 	APawn* ClosestFriend;
+	APawn* FarthestFriend;
 };

@@ -21,17 +21,16 @@ void UBTService_IsLonely::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 		return;
 	}
 
+	AActor* FarthestFriend = AIController->GetFarthestFriend();
+	if (!FarthestFriend)
+		return;
+	float DistanceToFarthest = FVector::Distance(FarthestFriend->GetActorLocation(), AIController->GetPawn()->GetActorLocation());
+
 	AActor* ClosestFriend = AIController->GetClosestFriend();
 	if (!ClosestFriend)
-	{
-		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 		return;
-	}
+	float DistanceToClosest = FVector::Distance(ClosestFriend->GetActorLocation(), AIController->GetPawn()->GetActorLocation());
 
-	bool isTooClose = FVector::Distance(ClosestFriend->GetActorLocation(), AIController->GetPawn()->GetActorLocation()) > AIController->GetMaxDistanceFromFriends();
-
-	if (isTooClose)
+	if (DistanceToClosest > AIController->GetMaxDistanceFromFriends()*2 || DistanceToFarthest > AIController->GetMaxDistanceFromFriends() * 8)
 		OwnerComp.GetBlackboardComponent()->SetValueAsBool(GetSelectedBlackboardKey(), true);
-	else
-		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 }

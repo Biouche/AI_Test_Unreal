@@ -23,15 +23,10 @@ void UBTService_IsTooClose::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* N
 
 	AActor* ClosestFriend = AIController->GetClosestFriend();
 	if (!ClosestFriend)
-	{
-		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 		return;
-	}
 
-	bool isTooClose = FVector::Distance(ClosestFriend->GetActorLocation(), AIController->GetPawn()->GetActorLocation()) < AIController->GetMinDistanceFromFriends();
+	bool bIsTooClose = FVector::Distance(ClosestFriend->GetActorLocation(), AIController->GetPawn()->GetActorLocation()) < AIController->GetMinDistanceFromFriends();
 
-	if (isTooClose)
+	if (bIsTooClose)
 		OwnerComp.GetBlackboardComponent()->SetValueAsBool(GetSelectedBlackboardKey(), true);
-	else
-		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 }
