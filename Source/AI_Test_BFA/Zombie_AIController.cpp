@@ -65,8 +65,8 @@ void AZombie_AIController::FindClosestFriend()
 	APawn* NewClosestFriend = nullptr;
 	for (AZombie_AIController* Friend : GameMode->Enemies)
 	{
-		// Skip self
-		if (Friend->GetPawn()->GetName().Equals(GetPawn()->GetName()))
+		// Skip self and idle friends
+		if (Friend->GetPawn()->GetName().Equals(GetPawn()->GetName()) || Friend->GetIsIdle())
 			continue;
 
 		FVector FriendActorLocation = Friend->GetPawn()->GetActorLocation();
@@ -98,8 +98,8 @@ void AZombie_AIController::FindFarthestFriend()
 	APawn* NewFarthestFriend = nullptr;
 	for (AZombie_AIController* Friend : GameMode->Enemies)
 	{
-		// Skip self
-		if (Friend->GetPawn()->GetName().Equals(GetPawn()->GetName()))
+		// Skip self and idle friends
+		if (Friend->GetPawn()->GetName().Equals(GetPawn()->GetName()) || Friend->GetIsIdle())
 			continue;
 
 		FVector FriendActorLocation = Friend->GetPawn()->GetActorLocation();
@@ -127,4 +127,14 @@ float AZombie_AIController::GetMaxDistanceFromFriends() const
 float AZombie_AIController::GetMaxPlayerRange() const
 {
 	return MaxPlayerRange;
+}
+
+bool AZombie_AIController::GetIsIdle() const
+{
+	return IsIdle;
+}
+
+void AZombie_AIController::SetIsIdle(bool bIsIdle)
+{
+	IsIdle = bIsIdle;
 }

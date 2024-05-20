@@ -38,11 +38,13 @@ public:
 	float GetMaxDistanceFromFriends() const;
 	float GetMaxPlayerRange() const;
 
+	bool GetIsIdle() const;
+	void SetIsIdle(bool IsIdle);
+
 private:
 
 	UPROPERTY(VisibleAnywhere)
 	float DistanceToClosestFriend;
-
 
 	UPROPERTY(EditAnywhere)
 	float CapsuleRadiusOffset = 30;
@@ -55,4 +57,5 @@ private:
 
 	APawn* ClosestFriend;
 	APawn* FarthestFriend;
+	bool IsIdle = false;
 };
