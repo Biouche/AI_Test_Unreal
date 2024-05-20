@@ -61,7 +61,10 @@ float AEnemy_Character::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			GameMode->PawnKilled(this);
 		}
 
+		GetCharacterMovement()->SetAvoidanceEnabled(false);
+
 		DetachFromControllerPendingDestroy();
+		GetCapsuleComponent()->SetCapsuleRadius(0);
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 
