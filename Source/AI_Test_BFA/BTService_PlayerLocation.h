@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(config = Game)
 class AI_TEST_BFA_API UBTService_PlayerLocation : public UBTService_BlackboardBase
 {
 	GENERATED_BODY()
@@ -19,4 +19,8 @@ public:
 	
 protected:
 	void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
+
+private:
+	UPROPERTY(config, Category = Node, EditAnywhere, meta = (ClampMin = "0.0"))
+	float FlankingOffset = 500;
 };

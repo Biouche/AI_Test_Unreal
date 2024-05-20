@@ -19,6 +19,10 @@ void AZombie_AIController::BeginPlay()
 	if (AIBehavior)
 	{
 		RunBehaviorTree(AIBehavior);
+		APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+
+		UBlackboardComponent* BlackboardComponent = GetBlackboardComponent();
+		BlackboardComponent->SetValueAsObject(TEXT("Player"), PlayerPawn);
 	}
 }
 
