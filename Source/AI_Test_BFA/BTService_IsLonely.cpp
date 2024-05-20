@@ -31,6 +31,8 @@ void UBTService_IsLonely::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 		return;
 	float DistanceToClosest = FVector::Distance(ClosestFriend->GetActorLocation(), AIController->GetPawn()->GetActorLocation());
 
-	if (DistanceToClosest > AIController->GetMaxDistanceFromFriends()*2 || DistanceToFarthest > AIController->GetMaxDistanceFromFriends() * 8)
+	if (DistanceToClosest > AIController->GetMaxDistanceFromFriends() * 2 || DistanceToFarthest > AIController->GetMaxDistanceFromFriends() * 8)
 		OwnerComp.GetBlackboardComponent()->SetValueAsBool(GetSelectedBlackboardKey(), true);
+	else
+		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 }

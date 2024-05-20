@@ -35,7 +35,6 @@ public:
 	void FindClosestFriend();
 	void FindFarthestFriend();
 
-	float GetMinDistanceFromFriends() const;
 	float GetMaxDistanceFromFriends() const;
 	float GetMaxPlayerRange() const;
 
@@ -44,8 +43,6 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	float DistanceToClosestFriend;
 
-	UPROPERTY(EditAnywhere)
-	float MinDistanceFromFriends = 75;
 
 	UPROPERTY(EditAnywhere)
 	float CapsuleRadiusOffset = 30;

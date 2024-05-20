@@ -8,9 +8,6 @@
 #include "EngineUtils.h"
 #include "KillEmAllGameMode.h"
 
-#include "DetourCrowdAIController.h"
-#include "Navigation/CrowdFollowingComponent.h"
-
 AZombie_AIController::AZombie_AIController(const FObjectInitializer& ObjectInitializer)
 {
 }
@@ -134,10 +131,7 @@ void AZombie_AIController::FindFarthestFriend()
 
 }
 
-float AZombie_AIController::GetMinDistanceFromFriends() const
-{
-	return MinDistanceFromFriends + CapsuleRadiusOffset * 2;
-}
+
 
 float AZombie_AIController::GetMaxDistanceFromFriends() const
 {
