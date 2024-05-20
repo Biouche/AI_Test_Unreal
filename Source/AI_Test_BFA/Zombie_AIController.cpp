@@ -29,18 +29,14 @@ void AZombie_AIController::Tick(float DeltaTime)
 	UBlackboardComponent* BlackboardComponent = GetBlackboardComponent();
 
 	if (GetPawn() && BlackboardComponent && !BlackboardComponent->IsVectorValueSet(TEXT("StartLocation")))
-	{
 		BlackboardComponent->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
-	}
 
 	AKillEmAllGameMode* GameMode = GetWorld()->GetAuthGameMode<AKillEmAllGameMode>();
 	if (!GameMode)
 		return;
 
 	if (GameMode->Enemies.Num() <= GameMode->InitialEnemiesCount / 2)
-	{
 		BlackboardComponent->SetValueAsBool(TEXT("IsHalfEnemiesLeft"), true);
-	}
 }
 
 AActor* AZombie_AIController::GetClosestFriend() const
@@ -65,13 +61,11 @@ void AZombie_AIController::FindClosestFriend()
 	APawn* NewClosestFriend = nullptr;
 	for (AZombie_AIController* Friend : GameMode->Enemies)
 	{
+		// Skip self
 		if (Friend->GetPawn()->GetName().Equals(GetPawn()->GetName()))
-		{
 			continue;
-		}
 
 		FVector FriendActorLocation = Friend->GetPawn()->GetActorLocation();
-
 		float CurrentActorDistance = FVector::Distance(GetPawn()->GetActorLocation(), FriendActorLocation);
 
 		if (CurrentActorDistance < MinDistance)
@@ -82,13 +76,9 @@ void AZombie_AIController::FindClosestFriend()
 	}
 	ClosestFriend = NewClosestFriend;
 	if (ClosestFriend)
-	{
 		BlackboardComponent->SetValueAsObject(TEXT("ClosestFriend"), ClosestFriend);
-	}
 	else
-	{
 		BlackboardComponent->ClearValue(TEXT("ClosestFriend"));
-	}
 
 }
 
@@ -104,13 +94,11 @@ void AZombie_AIController::FindFarthestFriend()
 	APawn* NewFarthestFriend = nullptr;
 	for (AZombie_AIController* Friend : GameMode->Enemies)
 	{
+		// Skip self
 		if (Friend->GetPawn()->GetName().Equals(GetPawn()->GetName()))
-		{
 			continue;
-		}
 
 		FVector FriendActorLocation = Friend->GetPawn()->GetActorLocation();
-
 		float CurrentActorDistance = FVector::Distance(GetPawn()->GetActorLocation(), FriendActorLocation);
 
 		if (CurrentActorDistance > MaxDistance)
@@ -121,17 +109,11 @@ void AZombie_AIController::FindFarthestFriend()
 	}
 	FarthestFriend = NewFarthestFriend;
 	if (FarthestFriend)
-	{
 		BlackboardComponent->SetValueAsObject(TEXT("FarthestFriend"), FarthestFriend);
-	}
 	else
-	{
 		BlackboardComponent->ClearValue(TEXT("FarthestFriend"));
-	}
 
 }
-
-
 
 float AZombie_AIController::GetMaxDistanceFromFriends() const
 {

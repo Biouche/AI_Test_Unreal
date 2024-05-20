@@ -26,11 +26,7 @@ void UBTService_PlayerIsInRange::TickNode(UBehaviorTreeComponent& OwnerComp, uin
 		return;
 
 	if (FVector::Dist(PlayerPawn->GetActorLocation(), AIController->GetPawn()->GetActorLocation()) < AIController->GetMaxPlayerRange())
-	{
 		OwnerComp.GetBlackboardComponent()->SetValueAsBool(GetSelectedBlackboardKey(), true);
-	}
 	else
-	{
 		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
-	}
 }

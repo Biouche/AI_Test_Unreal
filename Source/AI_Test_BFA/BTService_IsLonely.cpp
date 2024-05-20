@@ -21,16 +21,19 @@ void UBTService_IsLonely::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 		return;
 	}
 
+	// Get farthest friend
 	AActor* FarthestFriend = AIController->GetFarthestFriend();
 	if (!FarthestFriend)
 		return;
 	float DistanceToFarthest = FVector::Distance(FarthestFriend->GetActorLocation(), AIController->GetPawn()->GetActorLocation());
 
+	// Get closest friend
 	AActor* ClosestFriend = AIController->GetClosestFriend();
 	if (!ClosestFriend)
 		return;
 	float DistanceToClosest = FVector::Distance(ClosestFriend->GetActorLocation(), AIController->GetPawn()->GetActorLocation());
 
+	// Determine if lonely. Adding extra factors to consider capsule colliders.
 	if (DistanceToClosest > AIController->GetMaxDistanceFromFriends() * 2 || DistanceToFarthest > AIController->GetMaxDistanceFromFriends() * 8)
 		OwnerComp.GetBlackboardComponent()->SetValueAsBool(GetSelectedBlackboardKey(), true);
 	else

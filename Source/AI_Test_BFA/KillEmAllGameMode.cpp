@@ -8,32 +8,16 @@
 
 void AKillEmAllGameMode::PawnKilled(APawn* PawnKilled)
 {
-	APlayerController* PlayerController = Cast<APlayerController>(PawnKilled->GetController());
-	if (PlayerController) // Game Over
+	AZombie_AIController* EnemyCharacter = Cast<AZombie_AIController>(PawnKilled->GetController());
+	if (EnemyCharacter)
 	{
-		EndGame(false);
-	}
-	else
-	{
-		AZombie_AIController* EnemyCharacter = Cast<AZombie_AIController>(PawnKilled->GetController());
-		if (EnemyCharacter)
+		// Remove enemy from array 
+		Enemies.Remove(EnemyCharacter);
+		if (Enemies.Num() == 0)
 		{
-			// Remove eney from array
-			Enemies.Remove(EnemyCharacter);
+			APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+			if (PlayerController)
+				PlayerController->GameHasEnded(PlayerController->GetPawn(), true);
 		}
-	}
-}
-
-void AKillEmAllGameMode::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-void AKillEmAllGameMode::EndGame(bool playerWon)
-{
-	for (AController* Controller : Enemies)
-	{
-		bool isWinner = Controller->IsPlayerController() == playerWon;
-		Controller->GameHasEnded(Controller->GetPawn(), isWinner);
 	}
 }

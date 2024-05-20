@@ -12,16 +12,13 @@ void AShooterPlayerController::BeginPlay()
 
 	UUserWidget* HUD = CreateWidget(this, HUDClass);
 	if (HUD)
-	{
 		HUD->AddToViewport();
-	}
 }
 
 void AShooterPlayerController::GameHasEnded(AActor* EndGameFocus, bool bIsWinner)
 {
 	Super::GameHasEnded(EndGameFocus, bIsWinner);
+	UE_LOG(LogTemp, Warning, TEXT("PLAYER WON"));
 
 	GetWorldTimerManager().SetTimer(RestartTimer, this, &APlayerController::RestartLevel, RestartDelay);
 }
-
-

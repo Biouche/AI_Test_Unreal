@@ -19,9 +19,7 @@ EBTNodeResult::Type UBTTask_RunAwayFromPlayer::ExecuteTask(UBehaviorTreeComponen
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 
 	if (!OwnerComp.GetAIOwner())
-	{
 		return EBTNodeResult::Failed;
-	}
 
 	AAIController* AIController = OwnerComp.GetAIOwner();
 	APawn* OwnerPawn = AIController->GetPawn();
@@ -31,11 +29,9 @@ EBTNodeResult::Type UBTTask_RunAwayFromPlayer::ExecuteTask(UBehaviorTreeComponen
 	if (!PlayerPawn)
 		EBTNodeResult::Failed;
 
-
+	// Determine if enemy is MoveAwayDistance from the player to trigger run away behavior.
 	if (FVector::Dist(PlayerPawn->GetActorLocation(), OwnerPawn->GetActorLocation()) < MoveAwayDistance)
 	{
-		//FVector ToTarget = PlayerPawn->GetActorLocation() - OwnerPawn->GetActorLocation();
-		//FVector OppositeDirection = -ToTarget;
 		FVector OppositeDirection = PlayerPawn->GetActorForwardVector();
 		OppositeDirection.Normalize();
 
@@ -43,8 +39,6 @@ EBTNodeResult::Type UBTTask_RunAwayFromPlayer::ExecuteTask(UBehaviorTreeComponen
 
 		AIController->MoveToLocation(TargetLocation);
 	}
-
-
 
 	return EBTNodeResult::Succeeded;
 }

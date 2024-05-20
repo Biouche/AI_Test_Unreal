@@ -24,10 +24,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int InitialEnemiesCount;
-
-protected:
-	virtual void BeginPlay() override;
-
-private:
-	void EndGame(bool playerWon);
 };

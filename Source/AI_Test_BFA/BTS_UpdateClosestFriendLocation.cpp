@@ -24,6 +24,5 @@ void UBTS_UpdateClosestFriendLocation::TickNode(UBehaviorTreeComponent& OwnerCom
 	}
 
 	AIController->FindClosestFriend();
-
 	AIController->FindFarthestFriend();
 }

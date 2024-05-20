@@ -36,13 +36,9 @@ void AEnemy_Character::Tick(float DeltaTime)
 	float DistanceToPlayer = FVector::Dist(PlayerPawn->GetActorLocation(), GetActorLocation());
 
 	if (FVector::Dist(PlayerPawn->GetActorLocation(), GetActorLocation()) > FastWalkSpeedDistance)
-	{
 		GetCharacterMovement()->MaxWalkSpeed = CautiousWalkSpeed;
-	}
 	else
-	{
 		GetCharacterMovement()->MaxWalkSpeed = FastWalkSpeed;
-	}
 }
 
 // Called to bind functionality to input
